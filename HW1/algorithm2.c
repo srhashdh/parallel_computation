@@ -31,9 +31,9 @@ int main() {
 
     int start1 = clock();
     for(int r = 0; r < 19; r++){
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < L; j++) {
-                for (int k = 0; k < M; k++) {
+        for (int j = 0; j < N; j++) {
+            for (int k = 0; k < L; k++) {
+                for (int i = 0; i < M; i++) {
                     C1[i][j] += A[i][k] * B[k][j];
                 }
             }
