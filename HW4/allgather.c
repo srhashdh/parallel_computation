@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <mpi.h>
-int My_Allgather(void *sendbuf, int sendcount, MPI_Datatype sendtype,
+int My_Allgather1(void *sendbuf, int sendcount, MPI_Datatype sendtype,
                  void *recvbuf, int recvcount, MPI_Datatype recvtype,
                  MPI_Comm comm) {
     int rank, size;
@@ -17,6 +17,19 @@ int My_Allgather(void *sendbuf, int sendcount, MPI_Datatype sendtype,
                      (char*)recvbuf + ((rank - i - 1 + size) % size) * recvcount, recvcount, recvtype,
                      (rank - 1 + size) % size, 0, comm, MPI_STATUS_IGNORE);
     }
+
+    return MPI_SUCCESS;
+}
+int My_Allgather2(void *sendbuf, int sendcount, MPI_Datatype sendtype,
+                 void *recvbuf, int recvcount, MPI_Datatype recvtype,
+                 MPI_Comm comm) {
+    int rank, size;
+    MPI_Comm_rank(comm, &rank);
+    MPI_Comm_size(comm, &size);
+
+    MPI_Gather(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, 0, comm);
+
+    MPI_Bcast(recvbuf, recvcount * size, recvtype, 0, comm);
 
     return MPI_SUCCESS;
 }
@@ -86,7 +99,7 @@ int main(int argc, char **argv){
 	memset(recv_buffer, 0, nprocs * size);
 	MPI_Barrier(MPI_COMM_WORLD);
 	time0 = MPI_Wtime();
-	My_Allgather(send_buffer, size, MPI_BYTE, recv_buffer, size, MPI_BYTE, MPI_COMM_WORLD);
+	My_Allgather1(send_buffer, size, MPI_BYTE, recv_buffer, size, MPI_BYTE, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
 	time1 = MPI_Wtime();
 	if (myrank == 0)
@@ -94,6 +107,16 @@ int main(int argc, char **argv){
 	check(nprocs, myrank, size, recv_buffer);
 
 
+
+	memset(recv_buffer, 0, nprocs * size);
+    MPI_Barrier(MPI_COMM_WORLD);
+    time0 = MPI_Wtime();
+    My_Allgather2(send_buffer, size, MPI_BYTE, recv_buffer, size, MPI_BYTE, MPI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
+    time1 = MPI_Wtime();
+    if (myrank == 0)
+        fprintf(stderr, "The tree algorithm: wall time = %lf\n", time1 - time0);
+    check(nprocs, myrank, size, recv_buffer);
 
 	memset(recv_buffer, 0, nprocs * size); MPI_Barrier(MPI_COMM_WORLD);
 	time0 = MPI_Wtime();
