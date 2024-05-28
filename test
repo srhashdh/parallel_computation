@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+void multiply(long *x, long *y, long *result, int n) {
+    for (int i = 0; i < 2 * n; i++) {
+        result[i] = 0;
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            result[i + j] += x[i] * y[j];
+        }
+    }
+}
+
+void print_array(long *arr, int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%ld", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int n = 1024;  // 假設 n 是 2 的冪次方
+    long *x = (long *)calloc(n, sizeof(long));
+    long *y = (long *)calloc(n, sizeof(long));
+    long *result = (long *)calloc(2 * n, sizeof(long));
+
+    // 初始化 x 和 y 的值，這裡設置為隨機大數
+    srand(time(NULL));
+    for (int i = 0; i < n; i++) {
+        x[i] = rand() % 10;  // 假設每一位是 0-9 之間的隨機數
+        y[i] = rand() % 10;
+    }
+
+    // 計時開始
+    clock_t start = clock();
+
+    // 進行大數乘法運算
+    multiply(x, y, result, n);
+
+    // 計時結束
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+
+    // 打印結果
+
+    printf("Time taken: %f seconds\n", time_spent);
+
+    free(x);
+    free(y);
+    free(result);
+
+    return 0;
+}
+
