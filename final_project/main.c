@@ -11,17 +11,25 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 	gen_prime(&p, &q, rank, size);
-	if(rank == 0){
-		gmp_printf("%Zd\n", p);
-		gmp_printf("%Zd\n", q);
-		printf("\n");
-	}
 	MPI_Barrier(MPI_COMM_WORLD);	
-	mpz_t N, phi_N;
-	mpz_inits(N, phi_N, NULL);
+	mpz_t N, r;
+	mpz_inits(N, r, NULL);
+
+	
 	karatsuba(&N, rank, p, q);
+	MPI_Barrier(MPI_COMM_WORLD);
+
+	mpz_sub(r, N, p);
+	mpz_sub(r, r, q);
+	mpz_add_ui(r, r, 1);
+	MPI_Barrier(MPI_COMM_WORLD);
+
+	mpz_t* e = gen_e(r, rank, size);
+	MPI_Barrier(MPI_COMM_WORLD);
+	mpz_t* d = gen_d(*e, r);
 	if(rank == 0){
-		gmp_printf("%Zd\n", N);
+		gmp_printf("public key:(%Zd, %Zd)\n", N, e);
+		gmp_printf("private key: (%Zd, %Zd)\n", N, d);
 	}
 	MPI_Finalize();
     return 0;
