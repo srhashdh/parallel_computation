@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	mpz_t* d = gen_d(*e, r);
 	if(rank == 0){
 		gmp_printf("public key:(%Zd, %Zd)\n", N, e);
-		gmp_printf("private key: (%Zd, %Zd)\n", N, d);
+		gmp_printf("private key:(%Zd, %Zd)\n", N, d);
 	}
 	MPI_Finalize();
     return 0;

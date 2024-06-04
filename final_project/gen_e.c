@@ -23,8 +23,8 @@ void generate_random(mpz_t e, gmp_randstate_t state, mpz_t r) {
 mpz_t* gen_e(mpz_t r, int rank, int size) {
     mpz_t gcd;
     mpz_init(gcd);
-	unsigned char* e_buffer;
-    int e_size;
+	//unsigned char* e_buffer;
+    //int e_size;
 	bool found = false;
 	char *e_str = NULL;
     int e_length = 0;
@@ -40,8 +40,6 @@ mpz_t* gen_e(mpz_t r, int rank, int size) {
         		mpz_init(candidate_es[i]);
     		}		
 		}
-		unsigned long seed;
-		seed = (unsigned long)time(NULL);
 
 		mpz_t candidate_e;
 		mpz_init(candidate_e);
