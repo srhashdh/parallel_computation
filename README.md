@@ -1,16 +1,16 @@
-HW1：就三個不同的矩陣相乘方式，gpt隨便生的
+HW1：就三個不同的矩陣相乘方式
 
 
-HW2：也是gpt生的，反正就偶數process先發送，奇數process先接收
+HW2：偶數process先發送，奇數process先接收
 
 
-HW3：有點忘了是不是gpt生的，反正就用二元樹的架構寫bcast
+HW3：用二元樹的架構寫bcast
 
 
-HW4：Allgather的話gpt就生不太出來，因為要先切分再決定哪一份要到哪個process，所以在數說誰要先發誰要先收的部分有點小麻煩，應該還有更好的寫法。然後還寫了講義上說的樹型算法，調用一次gather和bcast
+HW4：先切分再決定哪一份要到哪個process，所以在數說誰要先發誰要先收的部分有點小麻煩，應該還有更好的寫法。然後還寫了講義上說的樹型算法，調用一次gather和bcast
 
 
-HW5：gpt生的，根本沒聽過什麼Gauss-Seidal
+HW5：根本沒聽過什麼Gauss-Seidal
 
 
 
