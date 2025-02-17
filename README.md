@@ -7,13 +7,13 @@ HW2：也是gpt生的，反正就偶數process先發送，奇數process先接收
 HW3：有點忘了是不是gpt生的，反正就用二元樹的架構寫bcast
 
 
-HW4：Allgather的話gpt就生不太出來，因為要先切分再決定哪一份要到哪個process，所以在數說誰要先發誰要先收的部分偏麻煩，應該還有更好的寫法。然後還寫了講義上說的樹型算法，調用一次gather和bcast
+HW4：Allgather的話gpt就生不太出來，因為要先切分再決定哪一份要到哪個process，所以在數說誰要先發誰要先收的部分有點小麻煩，應該還有更好的寫法。然後還寫了講義上說的樹型算法，調用一次gather和bcast
 
 
-HW5：gpt生的，笑死根本沒聽過什麼Gauss-Seidal
+HW5：gpt生的，根本沒聽過什麼Gauss-Seidal
 
 
 
-Final Project：生個RSA金鑰出來，媽的差點裝逼失敗，那個karatsuba卡超久，最後才勉強生出這個勉強有平行化的奇怪東西，算出來的結果正不正確呢？我不知道popoo，畢竟網路上大部分的計算機都算不了1024bit的乘法，用稍微小一點的數字去算應該是對的，因為是6月多寫的現在都11月了我根本已經看不懂當初寫了啥
+Final Project：生個RSA金鑰出來，並使用 GMP 函式庫與 MPI 函式庫，透過並行化變數生成與大數乘法(karatsuba演算法)來提升運算效能。
 
-
+update 2025/2/17
